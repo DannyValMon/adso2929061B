@@ -135,10 +135,11 @@ body{
             justify-content: center;
             gap: 1rem;
             a:is(:link, :visited){
-                background-color: var(--color-1);
+                background: linear-gradient(to right, #fffc, #fff3);
                 border-radius: 50px;
                 color: var(--color-2);
                 display: flex;
+                align-items: center;
                 padding: 0.6rem;
                 text-decoration: none;
                 transition: all 0.4s ease-in;
@@ -146,7 +147,7 @@ body{
                 width: 240px;
             }
             a:is(:hover){
-                background-color: #fff;
+                background: linear-gradient(to right, #ff0000, #0006);
                 transform: scale(1.05) translateY(-4px);
             }
             span{
