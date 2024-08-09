@@ -5,6 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title> 15-position </title>
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+      div.parent {
+        border: 2px solid #0009;
+        margin: 2rem auto;
+        padding: 2rem;
+        position: relative;
+        min-height: 100px;
+        width: 260px;
+      }
+      div.child {
+        background-color: #0009;
+        color: white;
+        padding: 0.4rem;
+        text-align: center;
+        width: 80px;
+      }
+      div.relative {
+        position: relative;
+        top: -20px;
+        left: 130px;
+      }
+      div.absolute {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+      }
+      div.fixed {
+        position: fixed;
+        top: 620px;
+        left: 50%;
+        transform: translate(-50%);
+        z-index: 9;
+      }
+      div.sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 20px;
+        width: 100%;
+      }
+      div.parent p{
+        font-size: 0.8rem !important;
+        text-align: justify;
+      }
+    </style>
   </head>
   <body class="css">
     <nav>
@@ -26,19 +70,19 @@
       <section>          
             <h3>Relative</h3>
             <div class="parent">
-                <div class="child relative">BOX</div>
+                <div class="child relative">BOX <small>relative</small></div>
             </div>
             <h3>Absolute</h3>
             <div class="parent">
-                <div class="child absolute">BOX</div>
+                <div class="child absolute">BOX <small>absolute</small></div>
             </div>
             <h3>Fixed</h3>
             <div class="parent">
-                <div class="child fixed">BOX</div>
+                <div class="child fixed">BOX <small>fixed</small></div>
             </div>
             <h3>Sticky</h3>
             <div class="parent">
-                <div class="child sticky">BOX</div>
+                <div class="child sticky">BOX <small>sticky</small></div>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta animi saepe reprehenderit in. Quam fugiat perspiciatis sint perferendis et excepturi explicabo, id reiciendis temporibus quisquam, iusto quos dolorum, voluptas adipisci natus odio sit! Cum maiores, consectetur magnam velit ad reiciendis reprehenderit error, iure excepturi praesentium distinctio asperiores quaerat minima dolore magni quas est perferendis illo saepe molestias et deserunt ipsum libero. Eius, atque! Labore obcaecati corporis eius quas beatae dolores aliquid ut error! Repudiandae placeat aperiam cumque? Aspernatur quidem sit voluptate alias aut ab voluptatibus? Praesentium maxime provident cupiditate illo qui nulla veniam laudantium nostrum officia asperiores aperiam consectetur non dicta expedita impedit unde eveniet error dolores sed voluptatem magnam necessitatibus ex, illum cumque! Eaque dolorem, voluptates in repudiandae perspiciatis corporis nihil officia impedit pariatur laboriosam, repellat, enim minima consequatur iusto ipsa cumque excepturi. Eius earum magni maxime iure, amet illo hic quaerat impedit omnis excepturi, alias error, quasi rem! Molestias temporibus reiciendis, qui sunt beatae expedita veritatis officiis ipsum corrupti omnis dolor culpa similique fuga nemo architecto numquam modi libero obcaecati tempore recusandae. Pariatur necessitatibus exercitationem fugit, aut eum deserunt quo sunt neque sed nihil sapiente eius vel sint cum itaque quam iste deleniti harum dicta! Odio, et facilis!
                 </p>
