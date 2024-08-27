@@ -294,3 +294,40 @@ body.css{
         }
     }
 }
+
+/*-----------------------------------------------------------------------------------------------*/
+/* 24 - reto */
+ body.reto{
+    main{
+        header{
+            div.spritelogo{
+                background: url(/03-css/css/images/spriteweb.png) no-repeat;
+                width: 180px;
+                height: 180px;
+                background-position: 3% 97%;
+            }
+        }
+        button.spt{
+            background-color: #18542c;
+            width: 7rem;
+            height: 3rem;
+            border-bottom: 3px solid white;
+        }
+        div.banner{
+            background: #18542c;
+            height: 250px;
+            width: 578px;
+            content: center;
+            div.banner1{
+                display: flex;
+                height: 190px;
+                width: 180px;
+                background: url(/03-css/css/images/spriteweb.png) no-repeat;
+                background-position: 95% 2%;
+            }
+        }
+    }
+    
+    background-color: #17a053;
+ }
+
