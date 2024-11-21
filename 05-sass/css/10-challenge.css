@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #212121;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+.header {
+  height: 80px;
+  background-color: #4caf50;
+}
+
+.navbar {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 1rem;
+}
+
+.menu_hamburguesa {
+  display: none;
+}
+.menu_hamburguesa:checked + .ul_links {
+  height: calc(100vh - 80px);
+}
+
+.logo {
+  color: #ffffff;
+}
+
+.list_icon {
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.ul_links {
+  width: 50%;
+  background-color: #a5d6a7;
+  position: relative;
+  left: 235px;
+  height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+  transition: all 0.3s;
+}
+
+.link {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bold;
+}
+.link:hover {
+  padding: 1.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff5722;
+}
+
+@media (min-width: 768px) {
+  .labe_hamburguesa {
+    display: none;
+  }
+  .ul_links {
+    position: static;
+    width: auto;
+    height: auto;
+    flex-direction: row;
+    gap: 2rem;
+  }
+  .link {
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    padding: 0.2rem 0.7rem;
+  }
+}
+
+/*# sourceMappingURL=10-challenge.css.map */

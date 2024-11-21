@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>01- Nest Rules (SASS)</title>
+    <title>07- Conditionals (SCSS)</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="css/01-nest.css">
+    <link rel="stylesheet" href="css/07-conditionals.css">
 </head>
 <body class="sass">
     <nav>
@@ -15,13 +15,22 @@
     </nav>
     <main>
         <header>
-            <h1>01- Nest Rules (SASS)</h1>
+            <h1>07- Conditionals (SCSS)</h1>
             <p>
-                Defines nested selectors for cleaner, organized code.
+                Applies styles conditionally based on specified criteria.
             </p>
         </header>
         <section class="content">
-            <h2>ADSO 2929061 B</h2>
+            <a href="#showModal" class="btn">Calculate</a>
+            <div id="showModal" class="modal">
+                <div>
+                    <a href="#hideModal" class="close"> &times; </a>
+                    <h2 class="message"></h2>
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero laborum mollitia cum minima, doloremque, animi omnis esse fuga consequatur dolores, ipsum aut? Soluta, perspiciatis vel?
+                    </p>
+                </div>
+            </div>
         </section>
     </main>
 </body>
