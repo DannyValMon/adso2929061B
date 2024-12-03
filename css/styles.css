@@ -80,7 +80,7 @@ body{
     align-items: center;
     min-height: 100vh;
     flex-wrap: wrap;
-    nav{
+    nav:not(.nav){
         position: fixed;
         top: 10px;
         left: 10px;
