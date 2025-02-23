@@ -494,3 +494,24 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 background-attachment: fixed;
 background-size: cover;
 }
+
+a {
+    border-radius: 4px;
+    background-color: #0009;
+    color: #fff;
+    padding: 0.2rem 2rem;
+  }
+  
+  #section01,
+  #section02,
+  #section03 {
+    position: absolute;
+    transition: all 0.5s ease-in;
+    transform: translateX(-200%)
+  }
+  
+  #section01:target,
+  #section02:target,
+  #section03:target {
+    transform: translateX(0)
+  }
