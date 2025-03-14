@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-class vehicle</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        figure.vehicle {
+            background: url(/08-javascript/images/dia.svg) no-repeat center;
+            height: 680px;
+            width: 368px;
+            margin: 0;
+            padding: 0;
+            position: relative; 
+            border-radius: 20px;
+        }
+
+        .vehicle h4 {
+            font-weight: 600;
+            font-size: 16px;
+            position: absolute;
+        }
+
+        .vehicle h4.title-brand {
+            left: 50%;
+            transform: translateX(-50%);
+            top: 115px;
+            background: transparent;
+        }
+
+        .vehicle h4.title-model {
+            top: 205px;
+            left: 14px;
+            width: 100px;
+            background: transparent;
+        }
+
+        .vehicle h4.title-refer {
+            left: 50%;
+            transform: translateX(-50%);
+            top: 205px;
+            width: 100px;
+            background: transparent;
+            text-align: center;
+        }
+
+        .vehicle h4.title-color {
+            top: 205px;
+            left: 254px;
+            width: 100px;
+            background: transparent;
+        }
+
+        .vehicle button.btn-prev,
+        .vehicle button.btn-next {
+            position: absolute;
+            height: 40px;
+            width: 40px;
+            top: 100px;
+            border: none;
+            transition: transform 0.4s ease-in;
+        }
+
+        .vehicle button.btn-prev {
+            background: url(/08-javascript/images/izquierda.svg) no-repeat center;
+            left: 30px;
+            
+        }
+
+        .vehicle button.btn-next {
+            background: url(/08-javascript/images/derecha.svg) no-repeat center;
+            right: 30px;
+        }
+
+        .vehicle button.btn-prev:hover {
+            transform: scale(1.1) translateX(-5px);
+        }
+
+        .vehicle button.btn-next:hover {
+            transform: scale(1.2) translateX(5px);
+        }
+        
+
+    </style>
+</head>
+<body class="js"> 
+    <nav>
+        <a href="inx.html">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg> 
+        </a>
+    </nav>
+    <main>
+        <header>
+            <h1>07-class vehicle</h1>
+            <p>LOREM</p>
+        </header>
+        <section>
+            <figure class="vehicle">
+                <h4 class="title-brand"></h4>
+                <h4 class="title-model"></h4>
+                <h4 class="title-refer"></h4>
+                <h4 class="title-color"></h4>
+                <button class="btn-prev"></button>
+                <button class="btn-next"></button>
+            </figure>
+        </section>
+    </main>
+    <script>
+        // Object
+        const vehicles = {
+            attrs: [
+                {'brand': 'Lamborghini', refer: 'Aventador', model: '2025', color: 'Black'},
+                {'brand': 'Camaro', refer: 'SS', model: '2024', color: 'Yellow'},
+                {'brand': 'Ford', refer: 'Raptor', model: '2026', color: 'Black'},
+                {'brand': 'Corvete', refer: 'Veneno', model: '2024', color: 'Red'},
+                {'brand': 'Mustang', refer: 'GT500', model: '2020', color: 'Black'}
+            ]
+        };
+
+        // Elements
+        const tBrand = document.querySelector('.title-brand');
+        const tRefer = document.querySelector('.title-refer');
+        const tModel = document.querySelector('.title-model');
+        const tColor = document.querySelector('.title-color');
+
+        const btnPrev = document.querySelector('.btn-prev');
+        const btnNext = document.querySelector('.btn-next');
+
+        // Variables
+        let inx = 0
+        btnPrev.style.opacity = '0.2'
+        btnPrev.style.pointerEvents = 'none';
+ 
+        // Events
+        btnNext.addEventListener('click', () => {
+            if(inx < (vehicles.attrs.length)-1) {
+                ++inx
+                btnPrev.style.opacity = '1'
+                btnPrev.style.pointerEvents = 'all';
+                car.brand = vehicles.attrs[inx].brand
+                car.refer = vehicles.attrs[inx].refer
+                car.model = vehicles.attrs[inx].model
+                car.color = vehicles.attrs[inx].color
+                car.displayData()
+                if(inx == (vehicles.attrs.length)-1) {
+                    btnNext.style.opacity = '0.2'
+                    btnNext.style.pointerEvents = 'none';
+                }   
+            }
+        })
+        btnPrev.addEventListener('click', () => {
+            if(inx > 0) {
+                --inx
+                btnNext.style.opacity = '1'
+                btnNext.style.pointerEvents = 'all';
+                car.brand = vehicles.attrs[inx].brand
+                car.refer = vehicles.attrs[inx].refer
+                car.model = vehicles.attrs[inx].model
+                car.color = vehicles.attrs[inx].color
+                car.displayData()
+                if(inx == 0) {
+                    btnPrev.style.opacity = '0.2'
+                    btnPrev.style.pointerEvents = 'none';
+                }
+            }
+        })
+
+        // Vehicle class
+        class vehicle {
+            constructor(brand, refer, model, color) {
+                this.brand = brand;
+                this.refer = refer;
+                this.model = model;
+                this.color = color;
+                this.isOn = false;
+            }
+
+            displayData() {
+                tBrand.textContent = this.brand;
+                tRefer.textContent = this.refer;
+                tModel.textContent = this.model;
+                tColor.textContent = this.color;
+            }
+
+            powerOn() {
+                if (!this.isOn) {
+                    this.isOn = true;
+                    console.log('Its ON');
+                } else {
+                    console.log('Already on');
+                }
+            }
+
+            powerOff() {
+                if (this.isOn) {
+                    this.isOn = false;
+                    console.log('Its off');
+                }
+            }
+        }
+
+        // Initial display
+        let car = new vehicle(vehicles.attrs[inx].brand, vehicles.attrs[inx].refer, vehicles.attrs[inx].model, vehicles.attrs[inx].color);
+        car.displayData();
+    </script>
+</body>
+</html>
+
+
