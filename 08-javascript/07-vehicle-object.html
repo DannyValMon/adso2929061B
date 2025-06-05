@@ -142,7 +142,7 @@
             background: url(/08-javascript/images/noche.svg) no-repeat center;
  
             button.btn-mode {
-                background: url(/08-javascript/images/noche.svg) no-repeat center;
+                background: url(/08-javascript/images/dia.svg) no-repeat center;
             }
  
             h4 {
@@ -150,11 +150,11 @@
             }
  
             button.btn-prev {
-                background: url(images/vehicle/btn-prev-dark.svg) no-repeat center;
+                background: url(images/izquierda.svg) no-repeat center;
             }
  
             button.btn-next {
-                background: url(images/vehicle/btn-next-dark.svg) no-repeat center;
+                background: url(images/derecha.svg) no-repeat center;
             }
  
             div.methods {
@@ -175,6 +175,27 @@
                         background: url(images/vehicle/btn-power-off-dark.svg) no-repeat center;
                     }
                 }
+            }
+        }
+
+        div.landscape{
+            background-color: rgb(0, 70, 95);
+            position: absolute;
+            overflow: hidden;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 285px;
+            border-radius: 20px;
+            height: 282px;
+            width: 328px;
+
+            img.car{
+                display: flex;
+                margin: 200px auto 0 auto;
+                object-fit: contain;
+                position: center;
+                height: 54px;
+                width: 164px;
             }
         }
  
@@ -219,6 +240,9 @@
                 <h4 class="title-color"></h4>
                 <button class="btn-prev"></button>
                 <button class="btn-next"></button>
+                <div class="landscape">
+                    <img class="car" src="">
+                </div>
                 <div class="methods">
                     <button class="btn-power-on"></button>
                     <button class="btn-forward"></button>
@@ -248,7 +272,8 @@
         const tRefer  = document.querySelector('.title-refer')
         const tModel  = document.querySelector('.title-model')
         const tColor  = document.querySelector('.title-color')
-
+        const carImg = document.querySelector('.car')
+        const h4s = document.querySelectorAll('h4')
         // Buttons
         const btnMode = document.querySelector('.btn-mode')
         const btnPrev = document.querySelector('.btn-prev')
@@ -286,6 +311,7 @@
                 car.refer = vehicles.attrs[inx].refer
                 car.model = vehicles.attrs[inx].model
                 car.color = vehicles.attrs[inx].color
+                car.image = vehicles.attrs[inx].image
                 car.displayData()
                 if(inx == (vehicles.attrs.length)-1) {
                     btnNext.style.opacity = '0.2'
@@ -302,6 +328,7 @@
                 car.refer = vehicles.attrs[inx].refer
                 car.model = vehicles.attrs[inx].model
                 car.color = vehicles.attrs[inx].color
+                car.image = vehicles.attrs[inx].image
                 car.displayData()
                 if(inx == 0) {
                     btnPrev.style.opacity = '0.2'
@@ -312,23 +339,29 @@
 
          // Class
          class Vehicle {
-            constructor(brand, refer, model, color) {
+            constructor(brand, refer, model, color, image) {
                 this.brand = brand
                 this.refer = refer
                 this.model = model
                 this.color = color
+                this.image = image
                 this.isOn  = false
             }
  
             displayData() {
                 tBrand.textContent = this.brand
-                tBrand.classList.add('show-data')
+                //tBrand.classList.add('show-data')
                 tRefer.textContent = this.refer
-                tRefer.classList.add('show-data')
+                //tRefer.classList.add('show-data')
                 tModel.textContent = this.model
-                tModel.classList.add('show-data')
+                //tModel.classList.add('show-data')
                 tColor.textContent = this.color
-                tColor.classList.add('show-data')
+                //tColor.classList.add('show-data')
+                carImg.src = this.image
+                //carImg.classList.add('show-data')
+                h4s.forEach((elm) => {
+                    elm.classList.add('show-data');
+                });
                 setTimeout(function() {
                     tBrand.classList.remove('show-data')
                     tRefer.classList.remove('show-data')
@@ -355,7 +388,8 @@
         car = new Vehicle(vehicles.attrs[inx].brand,
                           vehicles.attrs[inx].refer,
                           vehicles.attrs[inx].model,
-                          vehicles.attrs[inx].color)
+                          vehicles.attrs[inx].color,
+                          vehicles.attrs[inx].image)
         car.displayData()
         //car.powerOn()
         //car.powerOn()
