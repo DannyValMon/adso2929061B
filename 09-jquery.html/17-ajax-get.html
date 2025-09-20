@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>17-ajax-get</title>
      <link rel="stylesheet" href="../css/styles.css">
+     <style>
+    select {
+        display: block;
+        margin: 20px auto;
+        width: 160px;
+    }
+    div.loader {
+        background: url(images/loader.gif) no-repeat center;
+        height: 30px;
+        margin: 20px auto;
+        width: 50px;
+    }
+</style>
+
 </head>
 <body class="jquery"> 
      <nav>
@@ -21,7 +35,14 @@
             </p>
         </header>
         <section>
-            <p ></p>
+            <select class="brands form-select">
+                <option value="">Select Brand...</option>
+                <option value="1">SantaCruz</option>
+                <option value="2">Intense</option>
+                <option value="3">Yeti</option>
+            </select>
+            <div class="loader"></div>
+            <select class="references form-select"></select>
         </section>
        
     </main>
