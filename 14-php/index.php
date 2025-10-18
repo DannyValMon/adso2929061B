@@ -20,7 +20,7 @@
     <main>
         <header>
             <h1>php</h1>
-            <img src="../Images/" alt="php">
+            <img src="images/logo-php.png" alt="php">
             <p>
                 Is a server-side scripting languages 
 
