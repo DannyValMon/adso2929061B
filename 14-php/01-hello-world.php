@@ -9,3 +9,4 @@
     print ('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, tenetur illum minima eos error praesentium a dignissimos nemo ea assumenda cumque explicabo consequatur delectus doloremque labore aliquam placeat ipsa provident');
 
     include 'template/footer.php';
+?>
