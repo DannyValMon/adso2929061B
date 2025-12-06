@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main menu - ADSO 2929061 B</title>
-    <link rel="stylesheet" href="../css/styles.css">
-  </head>
-  <body class="oop" id="fondo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14 PHP</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+</head>
+<body class="oop">
+    <nav>
+    </nav>
     <main>
-      <header>
-            <h1>jQuery</h1>
-            <img src="../images/oop.png" alt="oop">
-            <p> oop   </p>
-        </header>
+        <header>
+            <h1>PHP</h1>
+            <img src="images/logo-oop.png" alt="PHP" >
+            <p>Is a server-side scripting language primarily used for web development.</p>
+        </header> 
         <menu>
             <a href="00-challenge.php">
                 <span>00</span>
-                Challenge
+                High Cohesion & Low Coupling
             </a>
             <a href="01-class.php">
                 <span>01</span>
@@ -96,5 +98,6 @@
             </a>
         </menu>
     </main>
-  </body>
+    
+</body>
 </html>
