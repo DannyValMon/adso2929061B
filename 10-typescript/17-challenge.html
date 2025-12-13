@@ -1,31 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>17-challenge</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <style>
-        
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokemon Battle</title>
+
+<style>
+body {
+    margin: 0;
+    background: #181818;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+section {
+    width: 550px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: #2d3436;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* ESCENA */
+.scene {
+    width: 100%;
+    height: 260px;
+    background-image: url('images/bg-challenge.svg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    position: relative;
+}
+
+.char-box {
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+}
+
+/* NUEVO: Imagen de los personajes */
+.char-img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+#player-box { left: 40px; }
+#enemy-box { right: 40px; }
+
+/* HP BAR */
+.hp-container {
+    width: 140px;
+    height: 18px;
+    background: #000;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-top: 8px;
+}
+
+.hp-bar {
+    height: 100%;
+    background: #44ff44;
+    width: 100%;
+    transition: width 0.4s ease;
+}
+
+#log {
+    background: #0f0f0f;
+    margin-top: 15px;
+    padding: 10px;
+    height: 150px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    text-align: left;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 40px;
+    font-size: 1rem;
+    background: #ffd32a;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover { background: #ffdd55; }
+button:disabled { background: gray; }
+</style>
+
 </head>
-<body class="ts">
-    <nav>
-        <a href="index.html">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-        </a>
-    </nav>
-    <main>
-        <header>
-            <h1> 17 - Challenge </h1>
-            <p>
-                Build a complete project using TypeScript features.
-            </p>
-        </header>
-        <section>
-            <div id="output17"></div>
-        </section>
-    </main>
-    <script src="dist/17-challenge.js"></script>
+<body>
+
+<section>
+    <h1>Batalla Pokémon</h1>
+
+    <div class="scene">
+        
+        <div id="player-box" class="char-box">
+            <img src="../images/pikachu.png" class="char-img">
+            <div>Pikachu</div>
+            <div class="hp-container">
+                <div id="player-hp-bar" class="hp-bar"></div>
+            </div>
+        </div>
+
+        <div id="enemy-box" class="char-box">
+            <img src="../images/bulbasur.png" class="char-img">
+            <div>Bulbasaur</div>
+            <div class="hp-container">
+                <div id="enemy-hp-bar" class="hp-bar"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <button id="fightBtn">Atacar</button>
+
+    <div id="log"></div>
+
+</section>
+
+<script src="dist/17-challenge.js"></script>
 </body>
 </html>
