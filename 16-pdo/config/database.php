@@ -133,7 +133,6 @@
         }
     }
 
-
     // List Species
     function listSpecies($conx) {
         try {
@@ -173,7 +172,7 @@
         }
     }
 
-    //edit pet
+        //edit pet
     function editPet($id, $name, $specie_id, $breed_id, $sex_id, $photo, $conx) {
         try {
             $sql = "UPDATE pets
@@ -195,4 +194,3 @@
             echo "Error: " . $e->getMessage();
         }
     }
-    

@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu mejor amigo en casa - Dashboard</title>
-    <link rel="stylesheet" href="<?=$css?>master.css">
+    <link rel="stylesheet" href="/16-pdo/public/css/master.css">
 </head>
 <body>
     <main class="dashboard">
@@ -50,13 +50,13 @@
             ?>
        </table>
     </main>
-</body>
-        <script>
+            <script>
             function deletePet(id, name) {
-            
+
                 if(confirm(`Esta usted seguro? Va eliminar a ${name}`)) {
                     window.location.replace('delete.php?id='+id)
                 }
             }
         </script>
+</body>
 </html>

@@ -12,6 +12,7 @@
         <form action="" method="post">
             <input type="text" name="email" placeholder="Correo Electrónico">
             <input type="password" name="password" placeholder="Contraseña">
+            <link rel="stylesheet" href="/16-pdo/public/css/master.css">
             <button>Ingresar</button>
         </form>
         <?php 
