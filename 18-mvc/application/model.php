@@ -1,115 +1,111 @@
-<?php
+<?php 
+class Model extends DataBase {
+    protected $db;
 
-class Model
-{
-    public $db;
-
-    public function __construct()
-    {
-        try {
-            $this->db = new PDO(
-                "mysql:host=localhost;dbname=pokeadso;charset=utf8",
-                "root",
-                ""
-            );
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Error DB: " . $e->getMessage());
-        }
+    public function __construct(){
+        $this->db = DataBase::connect();
     }
 
-    // =======================
-    // POKEMONS
-    // =======================
-
-    public function listPokemons()
-    {
-        $sql = "SELECT * FROM pokemons";
+   
+    
+    public function listPokemons(){
+        $sql = "SELECT p.*, t.name as trainer_name 
+                FROM pokemons p 
+                LEFT JOIN trainers t ON p.trainer_id = t.id 
+                ORDER BY p.id ASC";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function addPokemon($name, $type, $strength, $stamina, $speed, $accuracy, $trainer_id)
-    {
-        $sql = "INSERT INTO pokemons 
-                (name, type, strength, stamina, speed, accuracy, trainer_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+    
+    public function getPokemonById($id){
+        $sql = "SELECT p.*, t.name as trainer_name, t.level as trainer_level 
+                FROM pokemons p 
+                LEFT JOIN trainers t ON p.trainer_id = t.id 
+                WHERE p.id = :id";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([
-            $name,
-            $type,
-            $strength,
-            $stamina,
-            $speed,
-            $accuracy,
-            $trainer_id
-        ]);
-    }
-
-    public function getPokemon($id)
-    {
-        $sql = "SELECT * FROM pokemons WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updatePokemon(
-        $id,
-        $name,
-        $type,
-        $strength,
-        $stamina,
-        $speed,
-        $accuracy,
-        $trainer_id
-    ) {
+    public function createPokemon($data){
+        $sql = "INSERT INTO pokemons (name, type, trainer_id, strength, stamina, speed, accuracy) 
+                VALUES (:name, :type, :trainer_id, :strength, :stamina, :speed, :accuracy)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':name', $data['name'], PDO::PARAM_STR);
+        $stmt->bindParam(':type', $data['type'], PDO::PARAM_STR);
+        $stmt->bindParam(':trainer_id', $data['trainer_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $data['strength'], PDO::PARAM_INT);
+        $stmt->bindParam(':stamina', $data['stamina'], PDO::PARAM_INT);
+        $stmt->bindParam(':speed', $data['speed'], PDO::PARAM_INT);
+        $stmt->bindParam(':accuracy', $data['accuracy'], PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function updatePokemon($id, $data){
         $sql = "UPDATE pokemons 
-                SET name = ?, type = ?, strength = ?, stamina = ?, speed = ?, accuracy = ?, trainer_id = ?
-                WHERE id = ?";
-
+                SET name = :name, type = :type, trainer_id = :trainer_id, 
+                    strength = :strength, stamina = :stamina, speed = :speed, accuracy = :accuracy 
+                WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-
-        return $stmt->execute([
-            $name,
-            $type,
-            $strength,
-            $stamina,
-            $speed,
-            $accuracy,
-            $trainer_id,
-            $id
-        ]);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':name', $data['name'], PDO::PARAM_STR);
+        $stmt->bindParam(':type', $data['type'], PDO::PARAM_STR);
+        $stmt->bindParam(':trainer_id', $data['trainer_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':strength', $data['strength'], PDO::PARAM_INT);
+        $stmt->bindParam(':stamina', $data['stamina'], PDO::PARAM_INT);
+        $stmt->bindParam(':speed', $data['speed'], PDO::PARAM_INT);
+        $stmt->bindParam(':accuracy', $data['accuracy'], PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
-    public function deletePokemon($id)
-    {
-        $sql = "DELETE FROM pokemons WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$id]);
+    public function deletePokemon($id){
+        $stmt = $this->db->prepare("DELETE FROM pokemons WHERE id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
-    // =======================
-    // TRAINERS
-    // =======================
-
-    public function listTrainers()
-    {
-        $sql = "SELECT * FROM trainers";
+  
+    
+    public function listTrainers(){
+        $sql = "SELECT t.*, g.name as gym_name 
+                FROM trainers t 
+                LEFT JOIN gyms g ON t.gym_id = g.id 
+                ORDER BY t.name ASC";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    public function getPokemonWithTrainer($id)
-    {
-        $sql = "SELECT pokemons.*, trainers.name AS trainer_name
-                FROM pokemons
-                LEFT JOIN trainers ON pokemons.trainer_id = trainers.id
-                WHERE pokemons.id = ?";
-
+    
+    public function getTrainerById($id){
+        $sql = "SELECT t.*, g.name as gym_name 
+                FROM trainers t 
+                LEFT JOIN gyms g ON t.gym_id = g.id 
+                WHERE t.id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getPokemonsByTrainer($trainer_id){
+        $stmt = $this->db->prepare("SELECT * FROM pokemons WHERE trainer_id = :trainer_id ORDER BY name ASC");
+        $stmt->bindParam(':trainer_id', $trainer_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countPokemonsByTrainer($trainer_id){
+        $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM pokemons WHERE trainer_id = :trainer_id");
+        $stmt->bindParam(':trainer_id', $trainer_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
+
+   
+    
+    public function listGyms(){
+        $stmt = $this->db->query("SELECT * FROM gyms ORDER BY name ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

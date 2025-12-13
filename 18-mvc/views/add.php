@@ -1,32 +1,11 @@
-<?php 
-require_once "../application/model.php";
-$model = new Model;
-
-$trainers = $model->listTrainers();
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name = $_POST["name"];
-    $type = $_POST["type"];
-    $strength = $_POST["strength"];
-    $stamina = $_POST["stamina"];
-    $speed = $_POST["speed"];
-    $accuracy = $_POST["accuracy"];
-    $trainer_id = $_POST["trainer_id"];
-
-    if ($model->addPokemon($name, $type, $strength, $stamina, $speed, $accuracy, $trainer_id)) {
-        header("Location: ../index.php");
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Adicionar Pokémon</title>
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8">
+    <title>Adicionar Pokémon</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
 <body class="min-h-screen flex items-center justify-center bg-base-200">
@@ -35,12 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <h2 class="text-2xl mb-5 font-bold text-center">Adicionar Pokémon</h2>
 
-    <form method="POST" class="space-y-4">
+    <form method="POST" action="<?= $data['url'] ?>store" class="space-y-4">
 
-        <input required name="name" placeholder="Nombre"
-               class="input input-bordered w-full">
+        <input
+            required
+            name="name"
+            placeholder="Nombre"
+            class="input input-bordered w-full"
+            autofocus
+        >
 
         <select name="type" class="select select-bordered w-full" required>
+            <option disabled selected>Seleccione tipo</option>
             <option value="Water">Water</option>
             <option value="Fire">Fire</option>
             <option value="Grass">Grass</option>
@@ -51,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <option value="Dragon">Dragon</option>
             <option value="Rock">Rock</option>
         </select>
-        
+
         <div>
             <div class="flex justify-between text-sm font-medium mb-1">
                 <span>Strength</span>
@@ -92,11 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                    oninput="accV.textContent=this.value">
         </div>
 
-        <select name="trainer_id" class="select select-bordered w-full" required>
-            <option value="">Seleccione entrenador</option>
-            <?php foreach ($trainers as $t): ?>
-                <option value="<?= $t['id'] ?>">
-                    <?= htmlspecialchars($t['name']) ?>
+        <select name="trainer_id" class="select select-bordered w-full">
+            <option value="">Sin entrenador</option>
+            <?php foreach ($data['trainers'] as $trainer): ?>
+                <option value="<?= $trainer['id'] ?>">
+                    <?= htmlspecialchars($trainer['name']) ?> (Lvl <?= $trainer['level'] ?>)
                 </option>
             <?php endforeach; ?>
         </select>
@@ -107,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     </form>
 
-    <a href="../index.php" class="btn btn-neutral w-full mt-4">
+    <a href="<?= $data['url'] ?>" class="btn btn-neutral w-full mt-4">
         Volver
     </a>
 
