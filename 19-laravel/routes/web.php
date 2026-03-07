@@ -1,44 +1,98 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Models\Adoption;
-use App\Models\Pet;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function() {
-    return view('welcome');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('hello', function() {
-    return "<h1>Hello, Laravel😊!</h1>";
+
+require __DIR__.'/auth.php';
+Route::get('hello', function () {
+    return "<h1>Hello Laravel 🚀</h1>";
 });
-Route::get('sayhello/{name}', function($name) {
-    return "<h1>Hello: " . request()->name . "</h1>";
+
+Route::get('sayhello/{name}', function () {
+    return "<h1>Hello: ".request()->name."</h1>";
 });
-Route::get('show/pet/{id}', function() {
-    $pets = App\Models\Pet::find(request()->id);
-    dd($pets->toArray());
+
+Route::get('getall/pets', function(){
+    $pets = App\Models\Pet::all();
+    dd($pets->toArray()); 
 });
-Route::get('challenge', function() {
-    $users = App\Models\User::take(20)->get();
-    $stylesTH = "style='background: gray; color: white; padding: 0.4rem;'";
-    $stylesTD = "style='border: 1px solid gray; padding: 0.4rem;'";
-    //add 'User' -> 'Users'
-    $code = "<table style='border-collapse: collapse; margin: 2rem auto; font-family: Arial; text-align: center;'>";
-    foreach($users as $user) {
-        $code .= ("<tr style='background: #000000; color: #ffffff; text-align: center;'>");
-        $code .= "<td style='padding-right: 10px; padding-left: 10px;'>" . $user->id . "</td>";
-        $code .= "<td style='padding-top: 10px; padding-bottom: 10px;'>" . $user->last_name . "</td>";
-        $code .= "<td style='padding-top: 10px; padding-bottom: 10px;'>" . $user->first_name . "</td>";
-        $code .= "<td style='padding-top: 10px; padding-bottom: 10px;'>" . $user->email . "</td>";
-        $code .= "<td style='padding-top: 10px; padding-bottom: 10px;'>" . $user->role . "</td>";
-        $code .= "</tr>";
+
+Route::get('show/pet/{id}', function(){
+    $pet = App\Models\Pet::find(request()->id);
+    dd($pet->toArray()); 
+});
+Route::get('challenge', function () {
+    // Crear carpeta images si no existe
+    if (!file_exists(public_path('images'))) {
+        mkdir(public_path('images'), 0777, true);
     }
-    return $code . "</table>";
+    
+    // Verificar si hay usuarios
+    if (User::count() < 20) {
+        User::factory()->count(20)->create();
+    }
+    
+    $users = User::take(20)->get();
+
+    foreach ($users as $user) {
+        $imagePath = public_path('images/' . $user->photo);
+        if (!file_exists($imagePath)) {
+            try {
+                $gender = ($user->gender == 'Male') ? 'men' : 'women';
+                $url = "https://randomuser.me/api/portraits/{$gender}/" . rand(1,99) . ".jpg";
+                file_put_contents($imagePath, file_get_contents($url));
+            } catch (\Exception $e) {
+            }
+        }
+    }
+    
+
+    // Tabla sin estilos (lo más simple posible). Solo la fila superior en rojo.
+    $output = "<h2>Usuarios Challenge</h2>";
+    $output .= "<table>";
+    $output .= "<tr bgcolor='#d9534f'>";
+    $output .= "<th><font color='#ffffff'>Photo</font></th>";
+    $output .= "<th><font color='#ffffff'>Fullname</font></th>";
+    $output .= "<th><font color='#ffffff'>Age</font></th>";
+    $output .= "<th><font color='#ffffff'>Created At</font></th>";
+    $output .= "</tr>";
+    
+    foreach ($users as $user) {
+        $age = Carbon::parse($user->birthdate)->age;
+        
+        $output .= "<tr>";
+        $output .= "<td align='center'>";
+        if (file_exists(public_path('images/' . $user->photo))) {
+            $output .= "<img src='" . asset('images/' . $user->photo) . "' width='52' height='52' alt='photo'>";
+        } else {
+            $output .= "🖼️";
+        }
+        $output .= "</td>";
+        $output .= "<td>" . $user->fullname . "</td>";
+        $output .= "<td>" . $age . " Years old</td>";
+        $output .= "<td>" . $user->created_at . "</td>";
+        $output .= "</tr>";
+    }
+    
+    $output .= "</table>";
+    
+    return $output;
 });
+
 Route::get('getall/pets', function(){
     $pets = App\Models\Pet::all();
     return view('getallpets')->with('pets', $pets);

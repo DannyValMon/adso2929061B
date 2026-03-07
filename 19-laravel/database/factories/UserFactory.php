@@ -14,7 +14,7 @@ class UserFactory extends Factory
     /**
      * The current password being used by the factory.
      */
-    protected static ?string $password = null;
+    protected static ?string $password;
 
     /**
      * Define the model's default state.
@@ -23,19 +23,33 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $gender = fake()->randomElement(['Female', 'Male']);
-
-        $name = $gender === 'Female'
-            ? fake()->firstNameFemale()
-            : fake()->firstNameMale();
+        // return [
+        //     'document' => fake()->numerify('75#######'),
+        //     'fullname' => fake()->firstname().' '.fake()->lastName(),
+        //     'gender'=> fake()->randomElement(['Female', 'Male']),
+        //     'birthdate' => fake()->date(),
+        //     'phone' => fake()->numerify('320#######'),
+        //     'email' => fake()->unique()->safeEmail(),
+        //     'email_verified_at' => now(),
+        //     'password' => bcrypt('123456'),
+        //     'remember_token' => Str::random(10),
+        // ];
+        $gender = fake()->randomElement(array('Female', 'Male'));
+        $name = ($gender == 'Female') ? $name = fake()->firstNameFemale()
+                                      : $name = fake()->firstNameMale();
+        ($gender == 'Female') ? $g = 'women' : $g = 'men';
+        $id = fake()->numerify('75######');
+        $tnd = fake()->numberBetween(1,99);
+        copy('https://randomuser.me/api/portraits/'.$g.'/'.$tnd.'.jpg', public_path('images/'.$id.'.png'));
+        $email = Str::slug(strtolower($name)).fake()->numerify('###'. '@mail.com');
 
         return [
-            'document' => fake()->unique()->numerify('##########'),
-            'fullname' => $name . ' ' . fake()->lastName(),
-            'gender' => $gender,
-            'birthdate' => fake()->dateTimeBetween('1976-01-01', '2006-12-31')->format('Y-m-d'),
-            'photo' => fake()->uuid() . '.png',
-            'email' => fake()->unique()->safeEmail(),
+            'document'=> $id,
+            'fullname'=> $name . " " . fake()->lastName(),
+            'gender'=> $gender,
+            'birthdate' => fake()->dateTimeBetween('1976-01-01','2006-12-31'),
+            'photo' => $id . '.png',
+            'email' => $email,
             'phone' => fake()->numerify('310#######'),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('12345'),
